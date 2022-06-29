@@ -1,0 +1,28 @@
+{
+    "name": "matheus/centralcrmall",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Matheus\\CentralCrmall\\": "src/"
+        },
+        "files": [
+            
+        ]
+    },
+    "authors": [
+        {
+            "name": "Matheus",
+            "email": "matheus.fernando@crmall.com"
+        }
+    ],
+    "require": {
+        "league/csv": "9.3.*",
+        "coffeecode/uploader": "1.0.*",
+        "php": ">=7.4"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+    }
+  }
+}
