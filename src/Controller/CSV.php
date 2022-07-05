@@ -18,7 +18,7 @@ class CSV {
 		$dados = [];
 
 		// Abre o arquivo
-		$csv = fopen($arquivo, 'r');
+		$csv = fopen($arquivo, 'r+');
 
 		// Cabeçalho dos dados (Primeira linha)
 		$cabecalhoDados = $cabecalho ? fgetcsv($csv,0,$delimitador) : [];

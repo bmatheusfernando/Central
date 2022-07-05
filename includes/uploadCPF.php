@@ -28,7 +28,7 @@
                                 echo '<pre>';
                                 print_r($invalidosCPF);
                                 echo '</pre>';
-     
+         
                         ?>
 
                     </p>
