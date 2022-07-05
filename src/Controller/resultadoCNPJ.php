@@ -14,10 +14,10 @@
         if (empty($file["type"]) || !in_array($file["type"], $upload::isAllowed())) {
             echo "<p>Selecione um arquivo CSV</p>";
         } else {
-            $uploaded = $upload->upload($file, pathinfo($file['name'], PATHINFO_FILENAME));
+            $uploadedCNPJ = $upload->upload($file, pathinfo($file['name'], PATHINFO_FILENAME));
         } 
-   
-	$dados = CSV::lerArquivo($uploaded,true, ';');	
+
+	$dados = CSV::lerArquivo($uploadedCNPJ,true, ';');		
 
 	$arquivo = fopen(__DIR__.'/storage/validos/cnpj_validos.csv', 'w');
 
@@ -25,15 +25,17 @@
 			$resultado = CNPJ::validar($valores['CNPJ']);	
 		
 			if ($resultado === false) {
-				$invalidosCNPJ = $valores;
-					} else {
-						$linha['CNPJ'] 	        = $valores['CNPJ'];
-						$linha['Razão Social']  = $valores['Razão Social'];
-						$linha['Fantasia']      = $valores['Fantasia'];		
-						fputcsv($arquivo, $linha, ';');
-						}
-					}	
-			fclose($arquivo);
-		}
 
-?>	
+				$invalidosCNPJ[] = $valores;
+
+			} else {
+
+				$linha['CNPJ'] 	        = $valores['CNPJ'];
+				$linha['Razão Social']  = $valores['Razão Social'];	
+				$linha['Fantasia']      = $valores['Fantasia'];		
+				fputcsv($arquivo, $linha, ';');
+			}
+		}	
+		fclose($arquivo);
+	}
+?>

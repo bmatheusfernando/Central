@@ -14,25 +14,27 @@
         if (empty($file["type"]) || !in_array($file["type"], $upload::isAllowed())) {
             echo "<p>Selecione um arquivo CSV</p>";
         } else {
-            $uploaded = $upload->upload($file, pathinfo($file['name'], PATHINFO_FILENAME));
+            $uploadedCPF = $upload->upload($file, pathinfo($file['name'], PATHINFO_FILENAME));
         } 
-   
-	$dados = CSV::lerArquivo($uploaded,true, ';');	
+
+	$dados = CSV::lerArquivo($uploadedCPF,true, ';');		
 
 	$arquivo = fopen(__DIR__.'/storage/validos/cpf_validos.csv', 'w');
 
 		foreach ($dados as $key => $valores) {
-			$resultado = CPF::validar($valores['CPF']);	
+		$resultado = CPF::validar($valores['CPF']);	
 		
 			if ($resultado === false) {
-				$invalidosCPF = $valores;
-					} else {
-						$linha['CPF'] 	= $valores['CPF'];
-						$linha['Nome']  = $valores['Nome'];		
-						fputcsv($arquivo, $linha, ';');
-						}
-					}	
-			fclose($arquivo);
-		}
 
-?>	
+				$invalidosCPF[] = $valores;
+
+			} else {
+
+				$linha['CPF'] 	= $valores['CPF'];
+				$linha['Nome']  = $valores['Nome'];		
+				fputcsv($arquivo, $linha, ';');
+			}
+		}	
+		fclose($arquivo);
+	}
+?>
